@@ -1,5 +1,7 @@
 require 'sinatra'
 require 'line/bot'
+require 'httparty'
+
 WIKIPEDIA_URL = 'https://zh.wikipedia.org/w/api.php'.freeze
 
 def client
