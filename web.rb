@@ -175,5 +175,5 @@ def wiki(query)
   query = CGI.escape(query)
   query_string = "?action=opensearch&search=#{query}&limit=1&namespace=0&format=json"
   res = HTTParty.get(WIKIPEDIA_URL + query_string)
-  JSON.parse(res.body).try(:last).to_s
+  JSON.parse(res.body).last.to_s
 end
