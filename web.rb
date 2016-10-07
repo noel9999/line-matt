@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'line/bot'
+WIKIPEDIA_URL = 'https://zh.wikipedia.org/w/api.php'.freeze
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -38,7 +39,10 @@ post '/callback' do
                when /(m|M)att|radar/
                  MATT_SAY.sample
                when /欸/
-                 %w(欸 欸屁)
+                 %w(欸 欸屁).sample
+               when /^wiki\s{1}(.+)$/
+                 key_word = event.message['text'].match(/^wiki\s{1}(.+)$/)[1]
+                 wiki(key_word)
                end
         message = {
           type: 'text',
@@ -164,3 +168,10 @@ JIANGZHINE = [
 BOSS_SAY = %w(好秀嗎？ wu你妹 億全 愛溝共 小組抱抱 西咧靠腰 衝啥)
 BULLETS = %w(翻譯翻譯 黃四郎臉上有四嗎？ 你給我他媽的翻譯一下他媽的到底什麼是他媽的驚喜！ 讓子彈飛一會兒。 你這是要殺我，還是要睡我呢？ 屁股在樹上呢！ 騙了就騙了吧！ 兄弟們，回鵝城！)
 MATT_SAY =  %w(Exactly..Exactly 那我也不想給你看)
+
+def wiki(query)
+  query = CGI.escape(query)
+  query_string = "?action=opensearch&search=#{query}&limit=1&namespace=0&format=json"
+  res = HTTParty.get(WIKIPEDIA_URL + query_string)
+  JSON.parse(res.body).try(:last).to_s
+end
