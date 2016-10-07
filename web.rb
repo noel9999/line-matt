@@ -27,8 +27,16 @@ post '/callback' do
                  MA_SAYS.sample             
                when /所以我說那個.+呢/i, /醬汁呢/i
                  JIANGZHINE.sample             
-               when /李老闆/
+               when /李老闆|作弊|泡泡/
                  '去後面罰站!'
+               when /武德|(W|w)uder|億全|波斯/
+                 BOSS_SAY.sample
+               when /大哥|翻譯｜子彈/
+                 BULLETS.sample
+               when /你的錯|怪我囉|都你害的/
+                 '大人，冤枉啊'
+               when /(m|M)att|radar/
+                 MATT_SAY.sample
                end
         message = {
           type: 'text',
@@ -151,3 +159,6 @@ JIANGZHINE = [
         '那要先將蘋果，洋蔥等切成末之後，跟各種調味料以絕妙的比例互相調合。',
         '再給我一分鐘我一定能完成的。'
       ]
+BOSS_SAY = %w(好秀嗎？ wu你妹 億全 愛溝共 小組抱抱)
+BULLETS = %w(翻譯翻譯 黃四郎臉上有四嗎？ 你給我他媽的翻譯一下他媽的到底什麼是他媽的驚喜！ 讓子彈飛一會兒。 你這是要殺我，還是要睡我呢？ 屁股在樹上呢！ 騙了就騙了吧！ 兄弟們，回鵝城！)
+MATT_SAY =  %w(Exactly..Exactly 那我也不想給你看)
