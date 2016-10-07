@@ -31,6 +31,12 @@ post '/callback' do
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
         tf.write(response.body)
+      else
+        message = {
+          type: 'text',
+          text: event.inspect
+        }
+        client.reply_message(event['replyToken'], message)
       end
     end
   }
