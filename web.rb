@@ -43,7 +43,7 @@ post '/callback' do
                when /欸/
                  %w(欸 欸屁).sample
                when /^wiki\s{1}(.+)$/
-                 key_word = event.message['text'].match(/^wiki\s{1}(.+)$/)[1]
+                 key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/)[1]
                  wiki(key_word)
                end
         message = {
