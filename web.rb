@@ -22,11 +22,19 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text              
+        text = case event.message['text']
+               when /[馬螞皇蝗騜]/i
+                 MA_SAYS.sample             
+               when /所以我說那個.+呢/i, /醬汁呢/i
+                 JIANGZHINE.sample             
+               when /李老闆/
+                 '去後面罰站!'
+               end
         message = {
           type: 'text',
-          text: event.message['text']
+          text: text
         }
-        client.reply_message(event['replyToken'], message)        
+        client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
@@ -139,7 +147,6 @@ MA_SAYS = %w(
         哼！
         懶~
       )
-    end
 JIANGZHINE = [
         '那要先將蘋果，洋蔥等切成末之後，跟各種調味料以絕妙的比例互相調合。',
         '再給我一分鐘我一定能完成的。'
