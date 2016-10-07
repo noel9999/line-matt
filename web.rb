@@ -45,12 +45,14 @@ post '/callback' do
                when /^wiki\s{1}(.+)$/
                  key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/)[1]
                  wiki(key_word)
+               when /^頭條新聞\z/
+                 news
                end
         message = {
           type: 'text',
           text: text
         }
-        client.reply_message(event['replyToken'], message) if 'a' == %w(a b c).sample
+        client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
@@ -176,4 +178,10 @@ def wiki(query)
   query_string = "?action=opensearch&search=#{query}&limit=1&namespace=0&format=json"
   res = HTTParty.get(WIKIPEDIA_URL + query_string)
   JSON.parse(res.body).last.first
+end
+
+def news
+  res = HTTParty.get('http://oldpaper.g0v.ronny.tw/index/json')
+  res_json = JSON.parse(res.body)
+  "#{res_json['data'].first['title']} \n" + "#{res_json['data'].first['headlines'].map {|v| v.join(': ') }.join("\n")}" + "\n#{res_json['data'].first['link']}"
 end
