@@ -26,7 +26,7 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text              
         text = case event.message['text']
-               when /^[wiki\s{1}(.+)$/i
+               when /^wiki\s{1}(.+)$/i
                  key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/i)[1]
                  wiki(key_word)
                when /[馬螞皇蝗騜]/i
