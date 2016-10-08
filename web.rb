@@ -26,6 +26,9 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text              
         text = case event.message['text']
+               when /^[wiki\s{1}(.+)$/i
+                 key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/)[1]
+                 wiki(key_word)
                when /[馬螞皇蝗騜]/i
                  MA_SAYS.sample             
                when /所以我說那個.+呢/i, /醬汁呢/i
@@ -41,10 +44,7 @@ post '/callback' do
                when /(m|M)att|radar/
                  MATT_SAY.sample
                when /欸/
-                 %w(欸 欸屁).sample
-               when /^wiki\s{1}(.+)$/
-                 key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/)[1]
-                 wiki(key_word)
+                 %w(欸 欸屁).sample               
                when /^頭條新聞\z/
                  news
                end
