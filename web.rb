@@ -25,29 +25,67 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text              
-        text = case event.message['text']
-               when /^wiki\s{1}(.+)$/i
-                 key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/i)[1]
-                 wiki(key_word)
-               when /[馬螞皇蝗騜]/i
-                 MA_SAYS.sample             
-               when /所以我說那個.+呢/i, /醬汁呢/i
-                 JIANGZHINE.sample             
-               when /李老闆|作弊|泡泡|陳世彥/
-                 '去後面罰站!'
-               when /武德|(W|w)uder|億全|波斯|(B|b)oss|好笑嗎|好秀嗎/
-                 BOSS_SAY.sample
-               when /大哥|翻譯｜子彈/
-                 BULLETS.sample
-               when /你的錯|怪我囉|都你害的/
-                 '大人，冤枉啊'
-               when /(m|M)att|radar/
-                 MATT_SAY.sample
-               when /欸/
-                 %w(欸 欸屁).sample               
-               when /^頭條新聞\z/
-                 news
-               end
+        message = case event.message['text']
+                  when /^wiki\s{1}(.+)$/i
+                    key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/i)[1]
+                    { 
+                      text: wiki(key_word),
+                      type: 'text'
+                    }
+                  when /[馬螞皇蝗騜]/i
+                    { 
+                      text: MA_SAYS.sample,
+                      type: 'text'
+                    }                    
+                  when /所以我說那個.+呢/i, /醬汁呢/i
+                    { 
+                      text: JIANGZHINE.sample,
+                      type: 'text'
+                    }                                        
+                  when /李老闆|作弊|泡泡|陳世彥/
+                    { 
+                      text: '去後面罰站!',
+                      type: 'text'
+                    }                                        
+                  when /武德|(W|w)uder|億全|波斯|(B|b)oss|好笑嗎|好秀嗎/
+                    { 
+                      text: BOSS_SAY.sample,
+                      type: 'text'
+                    }                                        
+                  when /大哥|翻譯｜子彈/
+                    { 
+                      text: BULLETS.sample,
+                      type: 'text'
+                    }                                        
+                  when /你的錯|怪我囉|都你害的/
+                    { 
+                      text: '大人，冤枉啊!',
+                      type: 'text'
+                    }                    
+                  when /(m|M)att|radar/
+                    { 
+                      text: MATT_SAY.sample,
+                      type: 'text'
+                    }                                        
+                  when /欸/
+                    { 
+                      text: %w(欸 欸屁).sample,
+                      type: 'text'
+                    }
+                  when /^頭條新聞\z/
+                    { 
+                      text: news,
+                      type: 'text'
+                    }
+                  when /^gif\s{1}\w+\z/
+                    key_word = event.message['text'].match(/^gif\s{1}(\w+)\z/)[1]
+                    original_url, preview_url = gif(key_word)
+                    {
+                      previewImageUrl: preview_url,
+                      originalContentUrl: original_url,
+                      type: 'vedio'
+                    }
+                  end
         message = {
           type: 'text',
           text: text
@@ -184,4 +222,12 @@ def news
   res = HTTParty.get('http://oldpaper.g0v.ronny.tw/index/json')
   res_json = JSON.parse(res.body)
   "#{res_json['data'].first['title']} \n" + "#{res_json['data'].first['headlines'].map {|v| v.join(': ') }.join("\n")}" + "\n#{res_json['data'].first['link']}"
+end
+
+def gif(word)
+  word = CGI.escape(word)
+  url = "http://api.giphy.com/v1/gifs/search?q=#{word}&api_key=dc6zaTOxFJmzC&limit=1"
+  res = HTTParty.get(url)
+  res_json = JSON.parse(res.body)
+  [res_json['data'][0]['bitly_gif_url'], res_json['data'][0]['images']['original']['url']]
 end
