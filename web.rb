@@ -81,7 +81,7 @@ post '/callback' do
                     key_word = event.message['text'].match(/^gif\s{1}(\w+)\z/i)[1]
                     original_url, preview_url = gif(key_word)
                     {
-                      text: preview_url
+                      text: preview_url,
                       type: 'text'
                     }
                   end        
