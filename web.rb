@@ -81,8 +81,8 @@ post '/callback' do
                     key_word = event.message['text'].match(/^gif\s{1}(\w+)\z/i)[1]
                     original_url, preview_url = gif(key_word)
                     {
-                      originalContentUrl: original_url,
-                      type: 'vedio'
+                      text: preview_url
+                      type: 'text'
                     }
                   end        
         client.reply_message(event['replyToken'], message)
