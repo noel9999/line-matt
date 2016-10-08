@@ -77,11 +77,10 @@ post '/callback' do
                       text: news,
                       type: 'text'
                     }
-                  when /^gif\s{1}\w+\z/
-                    key_word = event.message['text'].match(/^gif\s{1}(\w+)\z/)[1]
+                  when /^gif\s{1}\w+\z/i
+                    key_word = event.message['text'].match(/^gif\s{1}(\w+)\z/i)[1]
                     original_url, preview_url = gif(key_word)
                     {
-                      previewImageUrl: preview_url,
                       originalContentUrl: original_url,
                       type: 'vedio'
                     }
