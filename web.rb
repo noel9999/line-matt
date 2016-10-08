@@ -79,7 +79,7 @@ post '/callback' do
                     }
                   when /^gif\s{1}([\w\s]+)\S$/i
                     key_word = event.message['text'].match(/^gif\s{1}([\w\s]+)\S$/i)[1]
-                    original_url, preview_url = gif(key_word)
+                    preview_url = gif(key_word)
                     {
                       text: preview_url,
                       type: 'text'
@@ -221,8 +221,8 @@ end
 
 def gif(word)
   word = CGI.escape(word)
-  url = "http://api.giphy.com/v1/gifs/search?q=#{word}&api_key=dc6zaTOxFJmzC&limit=1"
+  url = "http://api.giphy.com/v1/gifs/search?q=#{word}&api_key=dc6zaTOxFJmzC&limit=15"
   res = HTTParty.get(url)
   res_json = JSON.parse(res.body)
-  [res_json['data'][0]['bitly_gif_url'], res_json['data'][0]['images']['original']['url']]
+  res_json['data'].sample['images']['original']['url']
 end
