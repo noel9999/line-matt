@@ -98,7 +98,8 @@ post '/callback' do
 end
 
 get '/hello' do
-  'Hello World WTF'
+  name = params.fetch(:name, 'nemo')
+  "Hello World #{name}!"
 end
 
 MA_SAYS = %w(
