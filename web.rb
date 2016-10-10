@@ -98,7 +98,7 @@ post '/callback' do
 end
 
 get '/hello' do
-  name = params.fetch(:name, 'nemo')
+  name = params[:name]
   "Hello World #{name}!"
 end
 
