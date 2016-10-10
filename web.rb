@@ -98,8 +98,9 @@ post '/callback' do
 end
 
 get '/hello' do
-  name = params[:name]
-  "Hello World #{name}!"
+  # name = params[:name]
+  # "Hello World #{name}!"
+  params.inspect
 end
 
 MA_SAYS = %w(
