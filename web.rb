@@ -24,56 +24,56 @@ post '/callback' do
     case event
     when Line::Bot::Event::Message
       case event.type
-      when Line::Bot::Event::MessageType::Text              
+      when Line::Bot::Event::MessageType::Text
         message = case event.message['text']
                   when /^wiki\s{1}(.+)$/i
                     key_word = event.message['text'].match(/^wiki\s{1}(.+)\z/i)[1]
-                    { 
+                    {
                       text: wiki(key_word),
                       type: 'text'
                     }
                   when /[馬螞皇蝗騜]/i
-                    { 
+                    {
                       text: MA_SAYS.sample,
                       type: 'text'
-                    }                    
+                    }
                   when /所以我說那個.+呢/i, /醬汁呢/i
-                    { 
+                    {
                       text: JIANGZHINE.sample,
                       type: 'text'
-                    }                                        
+                    }
                   when /李老闆|作弊|泡泡|陳世彥/
-                    { 
+                    {
                       text: '去後面罰站!',
                       type: 'text'
-                    }                                        
+                    }
                   when /武德|(W|w)uder|億全|波斯|(B|b)oss|好笑嗎|好秀嗎/
-                    { 
+                    {
                       text: BOSS_SAY.sample,
                       type: 'text'
-                    }                                        
+                    }
                   when /大哥|翻譯｜子彈/
-                    { 
+                    {
                       text: BULLETS.sample,
                       type: 'text'
-                    }                                        
+                    }
                   when /你的錯|怪我囉|都你害的/
-                    { 
+                    {
                       text: '大人，冤枉啊!',
                       type: 'text'
-                    }                    
+                    }
                   when /(m|M)att|radar/
-                    { 
+                    {
                       text: MATT_SAY.sample,
                       type: 'text'
-                    }                                        
+                    }
                   when /欸/
-                    { 
+                    {
                       text: %w(欸 欸屁).sample,
                       type: 'text'
                     }
                   when /^頭條新聞\z/
-                    { 
+                    {
                       text: news,
                       type: 'text'
                     }
@@ -84,12 +84,12 @@ post '/callback' do
                       text: preview_url,
                       type: 'text'
                     }
-                  end        
+                  end
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
-        tf.write(response.body)      
+        tf.write(response.body)
       end
     end
   }
@@ -205,8 +205,8 @@ JIANGZHINE = [
         '再給我一分鐘我一定能完成的。'
       ]
 BOSS_SAY = %w(好秀嗎？ wu你妹 億全 愛溝共 小組抱抱 西咧靠腰 衝啥)
-BULLETS = %w(翻譯翻譯 黃四郎臉上有四嗎？ 你給我他媽的翻譯一下他媽的到底什麼是他媽的驚喜！ 讓子彈飛一會兒。 你這是要殺我，還是要睡我呢？ 屁股在樹上呢！ 騙了就騙了吧！ 兄弟們，回鵝城！)
-MATT_SAY =  %w(Exactly..Exactly 那我也不想給你看)
+BULLETS = %w(翻譯翻譯 黃四郎臉上有四嗎？ 你給我他媽的翻譯一下他媽的到底什麼是他媽的驚喜！ 別急，讓子彈飛一會兒。 你這是要殺我，還是要睡我呢？ 屁股在樹上呢！ 騙了就騙了吧！ 兄弟們，回鵝城！ 我聽出來了，你們都個個身懷絕技。 你覺得是你對我重要，還是錢對我重要？ 你再想想？ 其實你和錢對我都不重要。沒有你，對我很重要！ 槍在手！跟我走！ 殺四郎！搶碉樓! 兄弟!你太客氣了! 三舅，這話能跟他說嗎？ 他奶奶的這樣八歲! 放他媽的屁怎麼沒吹啊！？ 我要當縣長 步子邁大了，容易扯著蛋！ 明白啦!誰贏他們就幫誰)
+MATT_SAY =  ['Exactly..Exactly', '那我也不想給你看' , 'Hi,I\'m Matt.', '你們喜歡在這工作嗎?', '你們有看過凱羅忍的光劍嗎?', '你們覺得凱羅忍怎麼樣?', '你們相信他能像他所說的完成達斯.維達的遺願嗎?', '你這樣我壓力很大!', '嘿, 你踢我的版手', '才不是, 它超屌的', 'After Rain, Comes the Rainbow', '我看我能不能找到, 讓你們見識一下', '你們看！我找到凱羅忍的光劍了', '他說凱羅忍有八塊肌, 說他身材超健美', '我能知道你在想什麼', '你的想法..很愚蠢!!', '噢不, 他被食物噎到了!', ]
 
 def wiki(query)
   query = CGI.escape(query)
