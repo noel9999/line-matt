@@ -47,7 +47,7 @@ post '/callback' do
                       text: '去後面罰站!',
                       type: 'text'
                     }
-                  when /武德|(W|w)uder|億全|波斯|(B|b)oss|好笑嗎|好秀嗎/
+                  when /武德|Wuder|億全|波斯|boss|好笑嗎|好秀嗎/i
                     {
                       text: BOSS_SAY.sample,
                       type: 'text'
@@ -62,7 +62,7 @@ post '/callback' do
                       text: '大人，冤枉啊!',
                       type: 'text'
                     }
-                  when /(m|M)att|radar/
+                  when /matt|radar/i
                     {
                       text: MATT_SAY.sample,
                       type: 'text'
@@ -82,6 +82,11 @@ post '/callback' do
                     preview_url = gif(key_word)
                     {
                       text: preview_url,
+                      type: 'text'
+                    }
+                  when /(他|她)媽的/
+                    {
+                      text: '對不起,下次不敢了',
                       type: 'text'
                     }
                   end
