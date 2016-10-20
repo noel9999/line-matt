@@ -52,7 +52,6 @@ post '/callback' do
                       text: ['去後面罰站!', '不要怕，我後台很硬!', '朋友只是個過程，我們在一起吧(　^ω^)', '這裡的馬鈴薯燉肉很好吃!', '我要去北投泡溫泉'].sample,
                       type: 'text'
                     }
-                  end
                   when /武德|Wuder|億全|波斯|boss|好笑嗎|好秀嗎/i
                     {
                       text: BOSS_SAY.sample,
