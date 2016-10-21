@@ -87,10 +87,6 @@ post '/callback' do
                   when /^gif\s{1}([\w\s]+)\S$/i
                     key_word = event.message['text'].match(/^gif\s{1}([\w\s]+)\S$/i)[1]
                     preview_url = gif(key_word)
-                    {
-                      text: preview_url,
-                      type: 'text'
-                    }
                   when /(他|她)媽的/, /^[幹操]\s?.+/, /fuck|shit/i
                     {
                       text: ['對不起，下次不敢了', '阿扁錯了嗎?', '有話好說!', '猴，沒收功就說髒話', '幹，單挑啊( #｀Д´)', '塊陶啊～'].sample,
@@ -303,7 +299,12 @@ def gif(word)
   url = "http://api.giphy.com/v1/gifs/search?q=#{word}&api_key=dc6zaTOxFJmzC&limit=15"
   res = HTTParty.get(url)
   res_json = JSON.parse(res.body)
-  res_json['data'].sample['images']['original']['url']
+  # res_json['data'].sample['images']['original']['url']
+  res_json = res_json['data'].sample
+  {
+    type: 'vedio',
+    originalContentUrl: res_json['images']['original']['mp4']
+  }
 end
 
 COOK = [
