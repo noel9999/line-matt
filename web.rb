@@ -303,7 +303,8 @@ def gif(word)
   res_json = res_json['data'].sample
   {
     type: 'vedio',
-    originalContentUrl: res_json['images']['original']['mp4']
+    originalContentUrl: res_json['images']['original']['mp4'],
+    previewImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/YoonA.jpeg'
   }
 end
 
