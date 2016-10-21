@@ -303,7 +303,8 @@ def gif(word)
   res_json = res_json['data'].sample
   {
     type: 'video',
-    originalContentUrl: res_json['images']['original']['mp4']
+    originalContentUrl: res_json['images']['original']['mp4'],
+    previewImageUrl: res_json['images']['original']['webp']
   }
 end
 
