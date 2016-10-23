@@ -103,7 +103,9 @@ post '/callback' do
                       type: 'text'
                     }
                   end
-        client.reply_message(event['replyToken'], message)
+        res = client.reply_message(event['replyToken'], message)
+        puts "WTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTFWTF"
+        puts res.inspect
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
