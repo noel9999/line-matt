@@ -311,12 +311,12 @@ def gif(word)
   # res_json['data'].sample['images']['original']['url']
   res_json = res_json['data'].sample
   content_url = res_json['images']['fixed_height']['mp4']
-  content_url.sub('http', 'https') unless content_url =~ /^https/
+  content_url.sub!('http', 'https') unless content_url =~ /^https/
   {
     type: 'video',
-    originalContentUrl: res_json['images']['fixed_height']['mp4'].sub('https', 'https'),
+    originalContentUrl: content_url,
     # previewImageUrl: "https://media.giphy.com/media/#{res_json['id']}/giphy-facebook_s.jpg"
-    previewImageUrl: 'http://g-search2.alicdn.com/bao/uploaded/i1/2220704541/TB26iFCnFXXXXc9XXXXXXXXXXXX_!!2220704541.jpg_240x240q50'
+    previewImageUrl: 'https://upload.wikimedia.org/wikipedia/de/thumb/a/ad/Dropbox_logo.jpg/240px-Dropbox_logo.jpg'
   }
 end
 
