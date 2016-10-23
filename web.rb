@@ -310,7 +310,7 @@ def gif(word)
   {
     type: 'video',
     originalContentUrl: res_json['images']['original']['mp4'],
-    previewImageUrl: 'https://s-media-cache-ak0.pinimg.com/236x/39/0d/e3/390de36ee96d16e003c6107890936109.jpg'
+    previewImageUrl: "https://media.giphy.com/media/#{res_json['id']}/giphy-facebook_s.jpg
   }
 end
 
