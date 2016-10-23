@@ -309,7 +309,7 @@ def gif(word)
   res_json = res_json['data'].sample
   {
     type: 'video',
-    originalContentUrl: res_json['images']['original']['mp4'],
+    originalContentUrl: res_json['images']['fixed_height']['mp4'],
     previewImageUrl: "https://media.giphy.com/media/#{res_json['id']}/giphy-facebook_s.jpg"
   }
 end
