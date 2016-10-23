@@ -310,9 +310,11 @@ def gif(word)
   res_json = JSON.parse(res.body)
   # res_json['data'].sample['images']['original']['url']
   res_json = res_json['data'].sample
+  content_url = res_json['images']['fixed_height']['mp4']
+  content_url.sub('http', 'https') unless content_url =~ /^https/
   {
     type: 'video',
-    originalContentUrl: res_json['images']['fixed_height']['mp4'],
+    originalContentUrl: res_json['images']['fixed_height']['mp4'].sub('https', 'https'),
     previewImageUrl: "https://media.giphy.com/media/#{res_json['id']}/giphy-facebook_s.jpg"
   }
 end
