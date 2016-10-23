@@ -315,7 +315,8 @@ def gif(word)
   {
     type: 'video',
     originalContentUrl: res_json['images']['fixed_height']['mp4'].sub('https', 'https'),
-    previewImageUrl: "https://media.giphy.com/media/#{res_json['id']}/giphy-facebook_s.jpg"
+    # previewImageUrl: "https://media.giphy.com/media/#{res_json['id']}/giphy-facebook_s.jpg"
+    previewImageUrl: 'http://g-search2.alicdn.com/bao/uploaded/i1/2220704541/TB26iFCnFXXXXc9XXXXXXXXXXXX_!!2220704541.jpg_240x240q50'
   }
 end
 
