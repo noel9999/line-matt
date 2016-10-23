@@ -97,6 +97,11 @@ post '/callback' do
                       text: COOK.sample,
                       type: 'text'
                     }
+                  when /response/
+                    {
+                      text: event.inspect,
+                      type: 'text'
+                    }
                   end
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
@@ -277,6 +282,7 @@ MATT_SAY = [
   '混蛋',
   'ZZZz..zzZ..zzz..Zz',
   'ZZZ',
+  'zzzZzz.zz.ZZ',
   '你這樣不累嗎?'
 ].freeze
 
