@@ -1,6 +1,9 @@
 require 'httparty'
+require 'cgi'
 
 module Handlers
+  WIKIPEDIA_URL = 'https://zh.wikipedia.org/w/api.php'.freeze
+
   class Wiki < Base
     def pattern
       /^wiki\s{1}(.+)\z/i

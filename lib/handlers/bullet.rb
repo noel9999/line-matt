@@ -1,4 +1,4 @@
-module Handler
+module Handlers
   class Bullet < Base
     WORDINGS = %w(
                   翻譯翻譯 黃四郎臉上有四嗎？
